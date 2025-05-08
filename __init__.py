@@ -16,10 +16,17 @@ class DepthAnythingTensorrt:
         
     @classmethod
     def INPUT_TYPES(s):
+        file_list = []
+        for search_path in folder_paths.get_folder_paths("tensorrt"):
+            depth_path = os.path.join(search_path, "depth-anything")
+            if os.path.exists(depth_path):
+                file_list.append(os.listdir(depth_path))
+        if file_list == []:
+            file_list = os.listdir(ENGINE_DIR)
         return {
-            "required": { 
+            "required": {
                 "images": ("IMAGE",),
-                "engine": (os.listdir(ENGINE_DIR),),
+                "engine": (file_list,),
             }
         }
     RETURN_NAMES = ("IMAGE",)
