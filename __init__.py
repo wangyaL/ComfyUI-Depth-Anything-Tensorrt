@@ -7,7 +7,11 @@ from comfy.utils import ProgressBar
 import cv2
 from .utilities import Engine
 
-ENGINE_DIR = os.path.join(folder_paths.models_dir,"tensorrt", "depth-anything")
+ENGINE_DIR = (
+    os.path.join(folder_paths.get_folder_paths("tensorrt")[0], "depth-anything")
+    if folder_paths.get_folder_paths("tensorrt")
+    else os.path.join(folder_paths.models_dir, "tensorrt", "depth-anything")
+)
 
 class DepthAnythingTensorrt:
     def __init__(self):
